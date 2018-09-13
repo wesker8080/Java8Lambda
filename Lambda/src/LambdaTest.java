@@ -69,6 +69,7 @@ public class LambdaTest{
         return i;
     }
     static void test7() {
+        //Supplier< T>接口没有入参，返回一个T类型的对象
         Supplier<String> supplier = LambdaTest :: put;
         String s = supplier.get();
         System.out.println("-----------wesker-----------s值=" + s + "," + "当前类=LambdaTest.test7()");
