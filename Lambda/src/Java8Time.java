@@ -152,6 +152,14 @@ public class Java8Time {
         System.out.println();
         //日期2018-11-29和日期2018-09-05相差24天
     }
+    private static void countTimesOrDay() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime date = now.plusMinutes(30);
+        Duration period = Duration.between(now, date);
+        System.out.printf("日期%s和日期%s相差%d分", date, now, period.toMinutes());
+        System.out.println();
+        //日期2019-01-21T16:55:58.753和日期2019-01-21T16:25:58.753相差30分
+    }
     private static void getTimestamp() {
         Instant now = Instant.now();
         System.out.println("now : " + now);
@@ -237,5 +245,7 @@ public class Java8Time {
         dateConvertToLocalDateTime(new Date());
         //将java8 的 java.time.LocalDateTime 转换为 java.util.Date，默认时区为东8区
         localDateTimeConvertToDate(LocalDateTime.now());
+        // 两个日期之前的分钟差或秒差
+        countTimesOrDay();
     }
 }
