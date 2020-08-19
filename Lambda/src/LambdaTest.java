@@ -7,6 +7,7 @@ interface UserMapper {
 }
 interface OrderMapper {
     int insert(Integer i,String s);
+    //int insert(int i, String s, double d);
 }
 public class LambdaTest{
     private static final String WESKER = "wesker";
@@ -125,7 +126,7 @@ public class LambdaTest{
     }
     public static void main(String[] args) throws Exception {
         //test1();
-        //test2();
+        test2();
         //test3()
         //test4();
         //test5();
@@ -133,7 +134,7 @@ public class LambdaTest{
         //test7();
         //test8();
         //test9();
-         test10();
+        //test10();
     }
 }
 class Too {

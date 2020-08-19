@@ -71,6 +71,14 @@ public class Java8Time {
     private static void getCustomDate() {
         LocalDate date = LocalDate.of(1994, 5, 16);
         System.out.println("getCustomDate : " + date);
+        LocalDateTime date1 = LocalDateTime.of(2019, 12, 23,9,58,0);
+        long milli = date1.toInstant(ZoneOffset.of("+8")).toEpochMilli();
+        System.out.println("getCustomDate milli: " + milli);
+        LocalDate now = LocalDate.now();
+        LocalDateTime date2 = LocalDateTime.of(now.getYear(), now.getMonth(), 1,0,0,0);
+
+        System.out.println(date2.toString()+"");
+
     }
     private static void dateIsEqual() {
         LocalDate date = LocalDate.of(1994, 5, 16);
@@ -166,9 +174,17 @@ public class Java8Time {
         //now : 2018-11-29T03:38:38.793Z
     }
     private static void parseTime() {
-        String date = "20181128";
-        LocalDate parse = LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE);
-        System.out.println("parse : " + parse);
+        String date = "2018-11-23 12:13:45";
+        try {
+            DateTimeFormatter pattern = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            //LocalDate parse = LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE);
+            LocalDateTime parse = LocalDateTime.parse(date, pattern);
+
+            System.out.println("parse : " + parse);
+        } catch (Exception e) {
+            System.out.println("parse error: " + e.getMessage());
+
+        }
     }
     private static void customParseTime() {
         LocalDateTime now = LocalDateTime.now();
@@ -191,8 +207,34 @@ public class Java8Time {
         LocalDateTime dateTime = date.toInstant().atOffset(ZoneOffset.of("+8")).toLocalDateTime();
         System.out.println("dateTime : " + dateTime);
     }
+    public static void getWeek() {
+        LocalDate localDate = LocalDate.now();
+        DayOfWeek dayOfWeek = localDate.getDayOfWeek();
+        System.out.println("dayOfWeek : " + dayOfWeek);
+    }
+    /**
+     * 描述 获取今天星期几
+     *
+     * @param
+     * @return String
+     * @author ***
+     * @date 2018/11/26 10:53
+     */
+    public static String getDayOfTheWeek() {
+        String[][] strArray = {{"MONDAY", "一"}, {"TUESDAY", "二"}, {"WEDNESDAY", "三"}, {"THURSDAY", "四"}, {"FRIDAY", "五"}, {"SATURDAY", "六"}, {"SUNDAY", "日"}};
 
-
+        LocalDate currentDate = LocalDate.now();
+        String k = String.valueOf(currentDate.getDayOfWeek());
+        //获取行数
+        for (int i = 0; i < strArray.length; i++) {
+            if (k.equals(strArray[i][0])) {
+                k = strArray[i][1];
+                break;
+            }
+        }
+        System.out.println("getDayOfTheWeek : " + "星期" + k);
+        return "星期" + k;
+    }
 
     public static void localDateTimeConvertToDate(LocalDateTime localDateTime) {
         Date date = Date.from(localDateTime.toInstant(ZoneOffset.of("+8")));
@@ -247,5 +289,22 @@ public class Java8Time {
         localDateTimeConvertToDate(LocalDateTime.now());
         // 两个日期之前的分钟差或秒差
         countTimesOrDay();
+        // 获取星期(英文)
+        getWeek();
+        // 获取星期（中文）
+        getDayOfTheWeek();
+
+        // 毫秒转日期
+        systemToDate();
+    }
+
+    private static void systemToDate() {
+        long l = System.currentTimeMillis();
+        Instant timestamp = Instant.ofEpochMilli(l);
+        ZonedDateTime losAngelesTime = timestamp.atZone(ZoneId.of("Asia/Shanghai"));
+        DateTimeFormatter pattern = DateTimeFormatter.ofPattern("YYYY-MM-dd hh:mm:ss");
+        LocalDateTime localDateTime = losAngelesTime.toLocalDateTime();
+        String format = pattern.format(localDateTime);
+        System.out.println(format);
     }
 }

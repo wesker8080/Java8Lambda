@@ -104,7 +104,7 @@ public class OptionalTest {
     //返回异常
     @Test
     public void test4() {
-        User user = null;
+        User user = new User();
         //orElseThrow会在对象为空的时候抛出异常，而不是返回备选的值
         //这个方法可以决定抛出什么样的异常
         Optional.ofNullable(user).orElseThrow(IllegalArgumentException::new);
